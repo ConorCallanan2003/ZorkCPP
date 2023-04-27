@@ -17,14 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     int parentWidth = this->width();
     int parentHeight = this->height();
 
-
-    this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
-
+    this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
 
     int centerX = parentWidth / 2;
     int centerY = parentHeight / 2;
 
     avatarWidget = new AvatarWidget(this);
+
+    avatarWidget->setDiameter(30);
+
+//    avatarWidget->setMinimumSize(100, 100);
 
     int avatarWidgetX = centerX - avatarWidget->width();
     int avatarWidgetY = centerY - avatarWidget->height();
@@ -34,9 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     avatarWidget->setGeometry(avatarWidgetX, avatarWidgetY, avatarWidget->height(), avatarWidget->width());
 
-    avatarWidget->setDiameter(40);
-
-    QString title = "Zork | Text-Based View";
+    QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
 }
 
@@ -50,6 +50,7 @@ void MainWindow::on_actionText_Based_triggered()
 {
     QString title = "Zork | Text-Based View";
     setWindowTitle(title);
+    this->hide_ui_elements();
     this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
 }
 
@@ -58,6 +59,7 @@ void MainWindow::on_actionGUI_Based_triggered()
 {
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
+    this->show_ui_elements();
     this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
 
 }
@@ -146,6 +148,30 @@ void MainWindow::on_eastButton_clicked()
 //    int newX = oldX + 100;
 
     avatarWidget->moveDirection(50, 0);
+
+}
+
+void MainWindow::hide_ui_elements()
+{
+
+    this->ui->northButton->hide();
+    this->ui->southButton->hide();
+    this->ui->eastButton->hide();
+    this->ui->westButton->hide();
+
+    this->avatarWidget->hide();
+
+}
+
+void MainWindow::show_ui_elements()
+{
+
+    this->ui->northButton->show();
+    this->ui->southButton->show();
+    this->ui->eastButton->show();
+    this->ui->westButton->show();
+
+    this->avatarWidget->show();
 
 }
 

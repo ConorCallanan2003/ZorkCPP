@@ -37,6 +37,9 @@ private slots:
 
     void enable_buttons();
 
+    void hide_ui_elements();
+    void show_ui_elements();
+
 private:
     Ui::MainWindow *ui;
     QDialog *dialog;
