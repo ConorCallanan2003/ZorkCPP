@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     int parentWidth = this->width();
     int parentHeight = this->height();
 
-    this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
+
+    this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
 
 
     int centerX = parentWidth / 2;
@@ -25,24 +26,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     avatarWidget = new AvatarWidget(this);
 
-    int avatarWidgetX = centerX - avatarWidget->width() / 2;
-    int avatarWidgetY = centerY - avatarWidget->height() / 2;
+    int avatarWidgetX = centerX - avatarWidget->width();
+    int avatarWidgetY = centerY - avatarWidget->height();
 
     avatarWidget->xPos = avatarWidgetX;
     avatarWidget->yPos = avatarWidgetY;
 
     avatarWidget->setGeometry(avatarWidgetX, avatarWidgetY, avatarWidget->height(), avatarWidget->width());
 
-//    QVBoxLayout *layout = new QVBoxLayout(centralWidget());
-
     avatarWidget->setDiameter(40);
 
-//    dialog = new QDialog(this);
-//    QLabel *label = new QLabel("You are going west!", dialog);
-//    QVBoxLayout *dialog_layout = new QVBoxLayout(dialog);
-//    dialog_layout->addWidget(label, 0, Qt::AlignCenter);
-
-//    dialog->setLayout(dialog_layout);
     QString title = "Zork | Text-Based View";
     setWindowTitle(title);
 }
@@ -57,6 +50,7 @@ void MainWindow::on_actionText_Based_triggered()
 {
     QString title = "Zork | Text-Based View";
     setWindowTitle(title);
+    this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
 }
 
 
@@ -64,6 +58,7 @@ void MainWindow::on_actionGUI_Based_triggered()
 {
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
+    this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
 
 }
 

@@ -18,6 +18,7 @@ HEADERS += \
     avatar.h \
     avatarwidget.h \
     boundary.h \
+    gui.h \
     mainwindow.h
 
 FORMS += \

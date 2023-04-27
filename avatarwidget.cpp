@@ -15,7 +15,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setBrush(Qt::red);
-    painter.drawEllipse(rect().center(), m_diameter / 2, m_diameter / 2);
+    painter.drawEllipse(rect().center(), m_diameter, m_diameter);
 }
 
 void AvatarWidget::setDiameter(int diameter)
