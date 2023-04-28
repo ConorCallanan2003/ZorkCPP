@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     int parentWidth = this->width();
     int parentHeight = this->height();
 
+    ui->textEdit->hide();
+
     this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
 
     int centerX = parentWidth / 2;
@@ -25,8 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     avatarWidget = new AvatarWidget(this);
 
     avatarWidget->setDiameter(30);
-
-//    avatarWidget->setMinimumSize(100, 100);
 
     int avatarWidgetX = centerX - avatarWidget->width();
     int avatarWidgetY = centerY - avatarWidget->height();
@@ -51,6 +51,7 @@ void MainWindow::on_actionText_Based_triggered()
     QString title = "Zork | Text-Based View";
     setWindowTitle(title);
     this->hide_ui_elements();
+    this->show_text_elements();
     this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
 }
 
@@ -59,9 +60,9 @@ void MainWindow::on_actionGUI_Based_triggered()
 {
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
+    this->hide_text_elements();
     this->show_ui_elements();
     this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
-
 }
 
 
@@ -175,3 +176,14 @@ void MainWindow::show_ui_elements()
 
 }
 
+void MainWindow::show_text_elements(){
+
+    this->ui->textEdit->show();
+
+}
+
+void MainWindow::hide_text_elements(){
+
+    this->ui->textEdit->hide();
+
+}

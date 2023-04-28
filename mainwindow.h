@@ -40,6 +40,9 @@ private slots:
     void hide_ui_elements();
     void show_ui_elements();
 
+    void hide_text_elements();
+    void show_text_elements();
+
 private:
     Ui::MainWindow *ui;
     QDialog *dialog;
