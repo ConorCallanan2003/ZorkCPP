@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     avatarwidget.cpp \
     boundary.cpp \
+    item.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -18,6 +19,7 @@ HEADERS += \
     avatar.h \
     avatarwidget.h \
     boundary.h \
+    item.h \
     mainwindow.h
 
 FORMS += \
