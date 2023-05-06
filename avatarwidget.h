@@ -2,17 +2,20 @@
 #define AVATARWIDGET_H
 
 #include <QWidget>
+#include <string>
+
 
 class AvatarWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AvatarWidget(QWidget *parent = nullptr);
+    explicit AvatarWidget(QWidget *parent = nullptr, QPointF *startPos = new QPointF(0, 0), std::string path = ":images/hero.png");
 
     int xPos;
     int yPos;
 
-    void setDiameter(int diameter);
+    std::string path;
+    QPointF *startPos;
 
     void moveDirection(int x, int y);
 

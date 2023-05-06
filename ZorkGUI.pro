@@ -31,7 +31,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    ../../../Downloads/map.png
+    ../../../Downloads/map.png \
+    desert.png \
+    field.png \
+    graveyard.png
 
 RESOURCES += \
     images.qrc

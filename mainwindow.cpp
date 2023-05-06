@@ -7,6 +7,10 @@
 #include <QPushButton>
 #include <thread>
 #include <QPropertyAnimation>
+#include <QPalette>
+#include <QSize>
+#include <QKeyEvent>
+#include <QPointF>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,27 +18,32 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    int parentWidth = this->width();
-    int parentHeight = this->height();
-
     ui->textEdit->hide();
 
-    this->setStyleSheet("#MainWindow { background-image: url(:/images/map.png); background-repeat: no-repeat; background-position: center;}" "#MainWindow:size { height: 1000px; width: 1000px; }");
+    setFocusPolicy(Qt::StrongFocus);
 
-    int centerX = parentWidth / 2;
-    int centerY = parentHeight / 2;
+    avatarWidget = new AvatarWidget(this, new QPointF(651, 350), ":images/hero.png");
 
-    avatarWidget = new AvatarWidget(this);
+    QPixmap pixmap(":/images/field.png");
+    pixmap = pixmap.scaled(QSize(770, 770));
+    QPalette palette;
+    palette.setBrush(QPalette::Window, pixmap);
+    this->setPalette(palette);
 
-    avatarWidget->setDiameter(30);
+    QPushButton *northButton = new QPushButton("North", this);
+    QPushButton *southButton = new QPushButton("South", this);
+    QPushButton *eastButton = new QPushButton("East", this);
+    QPushButton *westButton = new QPushButton("West", this);
 
-    int avatarWidgetX = centerX - avatarWidget->width();
-    int avatarWidgetY = centerY - avatarWidget->height();
+    northButton->setGeometry(620, 580, 60, 50);
+    southButton->setGeometry(620, 680, 60, 50);
+    eastButton->setGeometry(670, 630, 60, 50);
+    westButton->setGeometry(570, 630, 60, 50);
 
-    avatarWidget->xPos = avatarWidgetX;
-    avatarWidget->yPos = avatarWidgetY;
-
-    avatarWidget->setGeometry(avatarWidgetX, avatarWidgetY, avatarWidget->height(), avatarWidget->width());
+    connect(northButton, &QPushButton::clicked, this, &MainWindow::on_northButton_clicked);
+    connect(southButton, &QPushButton::clicked, this, &MainWindow::on_southButton_clicked);
+    connect(eastButton, &QPushButton::clicked, this, &MainWindow::on_eastButton_clicked);
+    connect(westButton, &QPushButton::clicked, this, &MainWindow::on_westButton_clicked);
 
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
@@ -45,6 +54,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+
+    if(event->key() == Qt::Key_Up || event->key() == Qt::Key_W) {
+        this->on_northButton_clicked();
+    }
+    if(event->key() == Qt::Key_Down || event->key() == Qt::Key_S) {
+        this->on_southButton_clicked();
+    }
+    if(event->key() == Qt::Key_Right || event->key() == Qt::Key_D) {
+        this->on_eastButton_clicked();
+    }
+    if(event->key() == Qt::Key_Left || event->key() == Qt::Key_A) {
+        this->on_westButton_clicked();
+    }
+
+}
 
 void MainWindow::on_actionText_Based_triggered()
 {
@@ -68,10 +93,10 @@ void MainWindow::on_actionGUI_Based_triggered()
 
 void MainWindow::disable_buttons() {
 
-    QPushButton *northButton = this->ui->northButton;
-    QPushButton *southButton = this->ui->southButton;
-    QPushButton *eastButton = this->ui->eastButton;
-    QPushButton *westButton = this->ui->westButton;
+    QPushButton *northButton = this->northButton;
+    QPushButton *southButton = this->southButton;
+    QPushButton *eastButton = this->eastButton;
+    QPushButton *westButton = this->westButton;
 
     westButton->setEnabled(false);
     northButton->setEnabled(false);
@@ -82,10 +107,10 @@ void MainWindow::disable_buttons() {
 
 void MainWindow::enable_buttons() {
 
-    QPushButton *northButton = this->ui->northButton;
-    QPushButton *southButton = this->ui->southButton;
-    QPushButton *eastButton = this->ui->eastButton;
-    QPushButton *westButton = this->ui->westButton;
+    QPushButton *northButton = this->northButton;
+    QPushButton *southButton = this->southButton;
+    QPushButton *eastButton = this->eastButton;
+    QPushButton *westButton = this->westButton;
 
     northButton->setEnabled(true);
     southButton->setEnabled(true);
@@ -155,10 +180,10 @@ void MainWindow::on_eastButton_clicked()
 void MainWindow::hide_ui_elements()
 {
 
-    this->ui->northButton->hide();
-    this->ui->southButton->hide();
-    this->ui->eastButton->hide();
-    this->ui->westButton->hide();
+    this->northButton->hide();
+    this->southButton->hide();
+    this->eastButton->hide();
+    this->westButton->hide();
 
     this->avatarWidget->hide();
 
@@ -167,10 +192,10 @@ void MainWindow::hide_ui_elements()
 void MainWindow::show_ui_elements()
 {
 
-    this->ui->northButton->show();
-    this->ui->southButton->show();
-    this->ui->eastButton->show();
-    this->ui->westButton->show();
+    this->northButton->show();
+    this->southButton->show();
+    this->eastButton->show();
+    this->westButton->show();
 
     this->avatarWidget->show();
 

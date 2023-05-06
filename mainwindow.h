@@ -20,6 +20,14 @@ public:
 
     void onMoveButtonClicked();
 
+    QPushButton *northButton;
+    QPushButton *southButton;
+    QPushButton *eastButton;
+    QPushButton *westButton;
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private slots:
     void on_actionText_Based_triggered();
 

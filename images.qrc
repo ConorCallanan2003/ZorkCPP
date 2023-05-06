@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/images">
         <file>map.png</file>
+        <file>graveyard.png</file>
+        <file>desert.png</file>
+        <file>field.png</file>
+        <file>hero.png</file>
     </qresource>
 </RCC>
