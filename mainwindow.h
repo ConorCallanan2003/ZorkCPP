@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QDialog>
 #include <QPushButton>
-#include "avatarwidget.h"
+#include "level.h"
+#include "heroavatar.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,8 @@ public:
     QPushButton *eastButton;
     QPushButton *westButton;
 
+    Level *currentLevel;
+
 protected:
     void keyPressEvent(QKeyEvent *event);
 
@@ -33,13 +36,13 @@ private slots:
 
     void on_actionGUI_Based_triggered();
 
-    void on_westButton_clicked();
+    void westclicked();
 
-    void on_southButton_clicked();
+    void southclicked();
 
-    void on_northButton_clicked();
+    void northclicked();
 
-    void on_eastButton_clicked();
+    void eastclicked();
 
     void disable_buttons();
 
@@ -54,6 +57,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QDialog *dialog;
-    AvatarWidget *avatarWidget;
+    HeroAvatar *heroAvatar;
 };
 #endif // MAINWINDOW_H

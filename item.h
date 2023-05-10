@@ -13,6 +13,8 @@ public:
     std::vector<std::string> abilities;
     std::string name;
     int value;
+
+    void generateLevel();
 };
 
 #endif // ITEM_H
