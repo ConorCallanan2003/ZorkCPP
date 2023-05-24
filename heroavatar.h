@@ -9,7 +9,7 @@ public:
 
     void moveDirection(int x, int y);
 
-    bool overlapping(AvatarWidget avatar);
+    bool overlapping(AvatarWidget *avatar);
 private:
     AvatarWidget *monster;
     AvatarWidget *item1;

@@ -2,9 +2,13 @@
 #include <QPropertyAnimation>
 
 HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, AvatarWidget *monster, AvatarWidget *item1)
-    : AvatarWidget(parent, startPos, path) {}
+    : AvatarWidget(parent, startPos, path) {
+    this->monster = monster;
+    this->item1 = item1;
+}
 
 void HeroAvatar::moveDirection(int x, int y) {
+
     QPropertyAnimation *animation = new QPropertyAnimation(this, "pos");
 
     animation->setDuration(200);
@@ -52,19 +56,19 @@ void HeroAvatar::moveDirection(int x, int y) {
     animation->start();
 }
 
+bool HeroAvatar::overlapping(AvatarWidget *avatar) {
 
-bool HeroAvatar::overlapping(AvatarWidget avatar) {
+    int hx = pos().x() + (width()/2);
+    int hy = pos().y() + (height()/2);
 
-    int hx = pos().x();
-    int hy = pos().y();
+    int ax = avatar->pos().x() + (avatar->width()/2);
+    int ay = avatar->pos().y() + (avatar->height()/2);
 
-    int ax = avatar.pos().x();
-    int ay = avatar.pos().y();
-
-    if((hx < (ax+avatar.width())) && (hx > (ax))) {
-        if((hy < (ay+avatar.height())) && (hy > (ay))) {
+    if (hx < (ax+150) && hx > (ax-150)) {
+        if (hy < (ay+150) && hy > (ay-150)) {
             return true;
         }
     }
     return false;
+
 }
