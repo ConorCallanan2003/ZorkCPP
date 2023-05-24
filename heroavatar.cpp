@@ -39,8 +39,28 @@ void HeroAvatar::moveDirection(int x, int y) {
     animation->setStartValue(startPos);
     animation->setEndValue(endPos);
 
+
     this->xPos = endPos.x();
     this->yPos = endPos.y();
 
     animation->start();
+}
+
+
+bool HeroAvatar::overlapping(AvatarWidget avatar) {
+
+    int hx = pos().x();
+    int hy = pos().y();
+
+    int ax = avatar.pos().x();
+    int ay = avatar.pos().y();
+
+    if((hx < (ax+50)) && (hx > (ax-50))) {
+        if((hy < (ay+50)) && (hy > (ay-50))) {
+            return true;
+        }
+    }
+
+    return false;
+
 }

@@ -33,18 +33,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     std::string mapPath = ":/images/field.png";
 
-//    QPixmap pixmap(":/images/field.png");
-//    pixmap = pixmap.scaled(QSize(770, 770));
-//    QPalette palette;
-//    palette.setBrush(QPalette::Window, pixmap);
-//    this->setPalette(palette);
+    QPixmap pixmap(":/images/field.png");
+    pixmap = pixmap.scaled(QSize(770, 770));
+    QPalette palette;
+    palette.setBrush(QPalette::Window, pixmap);
+    this->setPalette(palette);
 
-    AvatarWidget *monster = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
+    monster = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
+    item1 = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
 
-    AvatarWidget *tool = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
-
-    currentLevel = new Level(this, heroAvatar, monster, tool, mapPath);
-    currentLevel->generateLevel();
+//    currentLevel = new Level(this, heroAvatar, monster, tool, mapPath);
+//    currentLevel->generateLevel();
 
     this->northButton = new QPushButton("North", this);
     this->southButton = new QPushButton("South", this);
@@ -60,12 +59,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this->southButton, &QPushButton::clicked, this, &MainWindow::southclicked);
     connect(this->eastButton, &QPushButton::clicked, this, &MainWindow::eastclicked);
     connect(this->westButton, &QPushButton::clicked, this, &MainWindow::westclicked);
-
-//    for(int i = 0; i < 3; i++) {
-
-
-
-//    }
 
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
@@ -111,7 +104,7 @@ void MainWindow::on_actionGUI_Based_triggered()
     setWindowTitle(title);
     this->hide_text_elements();
     this->show_ui_elements();
-    QPixmap pixmap(this->currentLevel->mapPath.c_str());
+    QPixmap pixmap(":images/field.png");
     pixmap = pixmap.scaled(QSize(770, 770));
     QPalette palette;
     palette.setBrush(QPalette::Window, pixmap);
@@ -151,7 +144,7 @@ void MainWindow::enable_buttons() {
 void MainWindow::westclicked()
 {
 
-    HeroAvatar *heroAvatar = this->currentLevel->hero;
+//    HeroAvatar *heroAvatar = this->hero;
 
 
     heroAvatar->moveDirection(-50, 0);
@@ -161,7 +154,7 @@ void MainWindow::westclicked()
 
 void MainWindow::southclicked()
 {
-    HeroAvatar *heroAvatar = this->currentLevel->hero;
+//    HeroAvatar *heroAvatar = this->hero;
 
     heroAvatar->moveDirection(0, 50);
 }
@@ -170,7 +163,7 @@ void MainWindow::southclicked()
 void MainWindow::northclicked()
 {
 
-    HeroAvatar *heroAvatar = this->currentLevel->hero;
+//    HeroAvatar *heroAvatar = this->hero;
 
 //    int newX = heroAvatar->x();
 //    int newY = heroAvatar->y() - 100;
@@ -184,7 +177,7 @@ void MainWindow::northclicked()
 void MainWindow::eastclicked()
 {
 
-    HeroAvatar *heroAvatar = this->currentLevel->hero;
+//    HeroAvatar *heroAvatar = this->hero;
 
 //    int oldX = heroAvatar->x();
 //    int oldY = heroAvatar->y();
@@ -203,6 +196,8 @@ void MainWindow::hide_ui_elements()
     this->westButton->hide();
 
     this->heroAvatar->hide();
+    this->monster->hide();
+    this->item1->hide();
 
 }
 
@@ -215,6 +210,8 @@ void MainWindow::show_ui_elements()
     this->westButton->show();
 
     this->heroAvatar->show();
+    this->monster->show();
+    this->item1->show();
 
 }
 

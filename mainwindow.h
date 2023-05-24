@@ -26,7 +26,7 @@ public:
     QPushButton *eastButton;
     QPushButton *westButton;
 
-    Level *currentLevel;
+//    Level *currentLevel;
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -58,5 +58,7 @@ private:
     Ui::MainWindow *ui;
     QDialog *dialog;
     HeroAvatar *heroAvatar;
+    AvatarWidget *monster;
+    AvatarWidget *item1;
 };
 #endif // MAINWINDOW_H
