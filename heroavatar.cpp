@@ -1,7 +1,7 @@
 #include "heroavatar.h"
 #include <QPropertyAnimation>
 
-HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path)
+HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, AvatarWidget *monster, AvatarWidget *item1)
     : AvatarWidget(parent, startPos, path) {}
 
 void HeroAvatar::moveDirection(int x, int y) {
@@ -23,7 +23,6 @@ void HeroAvatar::moveDirection(int x, int y) {
                     endPos = QPoint(startPos.x() + x, 26);
                 }
             } else {
-                qDebug() << "HIT";
                 endPos = QPoint(startPos.x() + x, 649);
             }
         } else {
@@ -33,15 +32,22 @@ void HeroAvatar::moveDirection(int x, int y) {
         endPos = QPoint(649, startPos.y() + y);
     }
 
-    qDebug() << "XPos: " << endPos.x() << "YPos: " << endPos.y();
+//    qDebug() << "XPos: " << endPos.x() << "YPos: " << endPos.y();
     //    qDebug( "C Style Debug Message" );
 
     animation->setStartValue(startPos);
     animation->setEndValue(endPos);
 
-
     this->xPos = endPos.x();
     this->yPos = endPos.y();
+
+    if(overlapping(monster)) {
+        qDebug() << "OVERLAPPED MONSTER";
+    }
+
+    if(overlapping(item1)) {
+        qDebug() << "OVERLAPPED ITEM";
+    }
 
     animation->start();
 }
@@ -55,12 +61,10 @@ bool HeroAvatar::overlapping(AvatarWidget avatar) {
     int ax = avatar.pos().x();
     int ay = avatar.pos().y();
 
-    if((hx < (ax+50)) && (hx > (ax-50))) {
-        if((hy < (ay+50)) && (hy > (ay-50))) {
+    if((hx < (ax+avatar.width())) && (hx > (ax))) {
+        if((hy < (ay+avatar.height())) && (hy > (ay))) {
             return true;
         }
     }
-
     return false;
-
 }

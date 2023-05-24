@@ -2,11 +2,14 @@
 #define ITEM_H
 #include <string>
 #include <vector>
+#include "avatarwidget.h"
 
 class Item
 {
 public:
     Item(std::string name, int value, std::vector<std::string> abilities);
+
+    AvatarWidget avatar;
 
     std::string description();
 

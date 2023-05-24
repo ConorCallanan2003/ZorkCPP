@@ -19,17 +19,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-//    ui->centralwidget->
-
-//    ui->textBrowser->hide();
-//    ui->lineEdit->hide();
-
     hide_text_elements();
-
     setFocusPolicy(Qt::StrongFocus);
 
-    heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png");
+    monster = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
+    item1 = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
+
+    heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
 
     std::string mapPath = ":/images/field.png";
 
@@ -38,9 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     QPalette palette;
     palette.setBrush(QPalette::Window, pixmap);
     this->setPalette(palette);
-
-    monster = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
-    item1 = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
 
 //    currentLevel = new Level(this, heroAvatar, monster, tool, mapPath);
 //    currentLevel->generateLevel();
@@ -92,7 +85,6 @@ void MainWindow::on_actionText_Based_triggered()
     setWindowTitle(title);
     this->hide_ui_elements();
     this->show_text_elements();
-//    this->setStyleSheet("#MainWindow { background-image: ; }" "#MainWindow:size { height: 1000px; width: 1000px; }");
     QPalette palette;
     this->setPalette(palette);
 }

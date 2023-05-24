@@ -10,20 +10,22 @@ CONFIG += c++17
 
 SOURCES += \
     avatarwidget.cpp \
-    boundary.cpp \
+    hero.cpp \
     heroavatar.cpp \
     item.cpp \
     level.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    monster.cpp
 
 HEADERS += \
     avatarwidget.h \
-    boundary.h \
+    hero.h \
     heroavatar.h \
     item.h \
     level.h \
-    mainwindow.h
+    mainwindow.h \
+    monster.h
 
 FORMS += \
     mainwindow.ui
