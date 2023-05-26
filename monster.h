@@ -6,9 +6,11 @@
 class Monster
 {
 public:
-    Monster(Item *weakness);
+    Monster(Item *weakness, AvatarWidget *avatar);
 
-    AvatarWidget avatar;
+    AvatarWidget *avatar;
+
+    bool dead;
 
     Item *weakness;
 };

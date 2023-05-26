@@ -1,10 +1,13 @@
 #include "heroavatar.h"
 #include <QPropertyAnimation>
 
-HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, AvatarWidget *monster, AvatarWidget *item1)
+typedef int (*FuncPtr)(int);
+
+HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, Monster *monster, Item *item1/*, Hero *hero*/)
     : AvatarWidget(parent, startPos, path) {
     this->monster = monster;
     this->item1 = item1;
+//    this->hero = hero;
 }
 
 void HeroAvatar::moveDirection(int x, int y) {
@@ -45,12 +48,24 @@ void HeroAvatar::moveDirection(int x, int y) {
     this->xPos = endPos.x();
     this->yPos = endPos.y();
 
-    if(overlapping(monster)) {
-        qDebug() << "OVERLAPPED MONSTER";
+    if(monster->avatar->path != "") {
+        if(overlapping(monster->avatar)) {
+            monster->avatar->deleteLater();
+            monster->avatar->path = "";
+//            bool survived = hero->kill(monster);
+//            if(survived) {
+//                qDebug() << "Survived";
+//            } else {
+//                qDebug() << "Died";
+//            }
+        }
     }
 
-    if(overlapping(item1)) {
-        qDebug() << "OVERLAPPED ITEM";
+    if(item1->avatar->path != "")
+    if(overlapping(item1->avatar)) {
+        item1->avatar->deleteLater();
+        item1->avatar->path = "";
+//        hero->take(item1);
     }
 
     animation->start();

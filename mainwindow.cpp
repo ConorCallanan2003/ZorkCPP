@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "avatarwidget.h"
 #include "heroavatar.h"
+#include "monster.h"
 #include <iostream>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -22,8 +23,12 @@ MainWindow::MainWindow(QWidget *parent)
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
-    monster = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
-    item1 = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
+    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
+    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
+
+    item1 = new Item("Sword", 12, {"sharp"}, item1Avatar);
+
+    monster = new Monster(item1, monsterAvatar);
 
     heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
 
@@ -188,8 +193,8 @@ void MainWindow::hide_ui_elements()
     this->westButton->hide();
 
     this->heroAvatar->hide();
-    this->monster->hide();
-    this->item1->hide();
+    this->monster->avatar->hide();
+    this->item1->avatar->hide();
 
 }
 
@@ -202,8 +207,8 @@ void MainWindow::show_ui_elements()
     this->westButton->show();
 
     this->heroAvatar->show();
-    this->monster->show();
-    this->item1->show();
+    this->monster->avatar->show();
+    this->item1->avatar->show();
 
 }
 

@@ -7,6 +7,8 @@
 #include "level.h"
 #include "heroavatar.h"
 #include "avatarwidget.h"
+#include "monster.h"
+#include "item.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -59,7 +61,9 @@ private:
     Ui::MainWindow *ui;
     QDialog *dialog;
     HeroAvatar *heroAvatar;
-    AvatarWidget *monster;
-    AvatarWidget *item1;
+//    AvatarWidget *monster;
+    Monster *monster;
+//    AvatarWidget *item1;
+    Item *item1;
 };
 #endif // MAINWINDOW_H

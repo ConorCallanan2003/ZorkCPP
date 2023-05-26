@@ -12,3 +12,7 @@ bool Hero::kill(Monster *monster) {
     }
     return false;
 }
+
+void Hero::take(Item *item) {
+    this->inventory = item;
+}

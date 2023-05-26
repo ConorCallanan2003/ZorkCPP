@@ -7,9 +7,9 @@
 class Item
 {
 public:
-    Item(std::string name, int value, std::vector<std::string> abilities);
+    Item(std::string name, int value, std::vector<std::string> abilities, AvatarWidget *avatar);
 
-    AvatarWidget avatar;
+    AvatarWidget *avatar;
 
     std::string description();
 

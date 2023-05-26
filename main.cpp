@@ -13,17 +13,4 @@ int main(int argc, char *argv[])
     w.setFixedSize(QSize(750, 750));
     w.show();
     return a.exec();
-
-//    std::vector<std::string> abilities = {"Sharp"};
-
-//    std::string name = "Sword";
-
-//    Item item(name, 25, abilities);
-
-//    QString qDesc = QString::fromStdString(item.description());
-
-
-//    qDebug() << qDesc;
-    qDebug() << "test";
-
 }
