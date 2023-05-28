@@ -14,7 +14,6 @@ SOURCES += \
     hero.cpp \
     heroavatar.cpp \
     item.cpp \
-    level.cpp \
     main.cpp \
     mainwindow.cpp \
     monster.cpp
@@ -25,7 +24,6 @@ HEADERS += \
     hero.h \
     heroavatar.h \
     item.h \
-    level.h \
     mainwindow.h \
     monster.h
 

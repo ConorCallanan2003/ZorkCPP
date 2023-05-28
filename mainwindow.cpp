@@ -36,7 +36,6 @@ MainWindow::~MainWindow()
 void MainWindow::start() {
 
     runGame(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword"));
-//    runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
 
 }
 
@@ -61,8 +60,6 @@ int MainWindow::runGame(std::string mapPath, std::string monsterPath, std::strin
 
     HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
     hero->avatar = heroAvatar;
-
-//    std::string mapPath = ":/images/field.png";
 
     QPixmap pixmap(mapPath.c_str());
     pixmap = pixmap.scaled(QSize(770, 770));

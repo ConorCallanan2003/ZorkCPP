@@ -16,6 +16,6 @@ int main(int argc, char *argv[])
 //    w.runGame(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword"), &game2);
 
     w.start();
-
-    return a.exec();
+    a.exec();
+    return 0;
 }

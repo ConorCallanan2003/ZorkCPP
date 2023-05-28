@@ -1,5 +1,7 @@
 #include "hero.h"
 #include <QPropertyAnimation>
+#include <chrono>
+#include <thread>
 
 Hero::Hero(Dialog *deadDialog, Dialog *wonDialog, MainWindow *w)
 {
@@ -59,12 +61,15 @@ void Hero::moveDirection(int x, int y) {
         if(this->avatar->overlapping(this->avatar->monster->avatar)) {
             bool killed = kill(this->avatar->monster);
             if(killed) {
-                this->avatar->monster->avatar->deleteLater();
-                this->avatar->monster->avatar->path = "";
                 wonDialog->raise();
                 wonDialog->show();
+                this->moveDirection(50, 50);
+                std::this_thread::sleep_for(std::chrono::seconds(3));
+                w->close();
+                MainWindow *w2 = new MainWindow();
 
-                w->runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
+                w2->runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
+
             } else {
 //                this->avatar->deleteLater();
 //                this->avatar->path = "";
