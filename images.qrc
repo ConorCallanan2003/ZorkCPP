@@ -13,6 +13,7 @@
         <file>hero.png</file>
         <file>../../you-died-.gif</file>
         <file>you-died.png</file>
+        <file>you-won.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

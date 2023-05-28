@@ -7,15 +7,13 @@
 class Item
 {
 public:
-    Item(std::string name, int value, std::vector<std::string> abilities, AvatarWidget *avatar);
+    Item(std::string name);
 
     AvatarWidget *avatar;
 
     std::string description();
 
-    std::vector<std::string> abilities;
     std::string name;
-    int value;
 
     void generateLevel();
 };

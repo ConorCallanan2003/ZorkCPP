@@ -10,6 +10,10 @@
 #include "monster.h"
 #include "item.h"
 #include "hero.h"
+#include "dialog.h"
+#include "mainwindow.h"
+
+class Hero;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,7 +34,12 @@ public:
     QPushButton *eastButton;
     QPushButton *westButton;
 
-//    Level *currentLevel;
+    int runGame(std::string mapPath, std::string monsterPath, std::string item1Path, Item *item1);
+    void start();
+
+    void resetGame();
+
+//    void game2();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -57,6 +66,8 @@ private slots:
 
     void hide_text_elements();
     void show_text_elements();
+
+//    void *nextGame(MainWindow *w);
 
 private:
     Ui::MainWindow *ui;

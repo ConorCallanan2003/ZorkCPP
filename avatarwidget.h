@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <string>
+#include <QPainter>
+#include <QPropertyAnimation>
+#include <QDebug>
+#include <QImage>
 
 
 class AvatarWidget : public QWidget
@@ -19,7 +23,7 @@ public:
     void moveDirection(int x, int y);
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
     int m_diameter;

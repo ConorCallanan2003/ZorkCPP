@@ -1,8 +1,4 @@
 #include "avatarwidget.h"
-#include <QPainter>
-#include <QPropertyAnimation>
-#include <QDebug>
-#include <QImage>
 
 AvatarWidget::AvatarWidget(QWidget *parent, QPointF *startPos, std::string path) : QWidget(parent)
 {

@@ -20,39 +20,55 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+//void game2() {
+//        qDebug() << "RAN";
+//    runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/gold.png", new Item("Gold"), nullptr);
+//}
+
+void MainWindow::start() {
+
+    runGame(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword"));
+//    runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
+
+}
+
+int MainWindow::runGame(std::string mapPath, std::string monsterPath, std::string item1Path, Item *item1) {
+
     ui->setupUi(this);
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
-    Dialog youDiedBox = new AvatarWidget(this, new QPointF(250, 250), ":images/you-died.png");
+    Dialog *deadDialog = new Dialog(this, new QPointF(100, 100), ":images/you-died.png");
+    Dialog *wonDialog = new Dialog(this, new QPointF(100, 100), ":images/you-won.png");
 
-    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
-    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
+    deadDialog->hide();
+    wonDialog->hide();
 
-    item1 = new Item("Sword", 12, {"sharp"}, item1Avatar);
+    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), monsterPath);
+    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), item1Path);
 
+    item1->avatar = item1Avatar;
     monster = new Monster(item1, monsterAvatar);
-
-    hero = new Hero();
+    hero = new Hero(deadDialog, wonDialog, this);
 
     HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
-
-//    bool (Hero::*funcptr)(Monster* target) =
-
-//    heroAvatar->killptr = &Hero::kill;
-
     hero->avatar = heroAvatar;
 
-    std::string mapPath = ":/images/field.png";
+//    std::string mapPath = ":/images/field.png";
 
-    QPixmap pixmap(":/images/field.png");
+    QPixmap pixmap(mapPath.c_str());
     pixmap = pixmap.scaled(QSize(770, 770));
     QPalette palette;
     palette.setBrush(QPalette::Window, pixmap);
     this->setPalette(palette);
-
-//    currentLevel = new Level(this, heroAvatar, monster, tool, mapPath);
-//    currentLevel->generateLevel();
 
     this->northButton = new QPushButton("North", this);
     this->southButton = new QPushButton("South", this);
@@ -71,11 +87,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QString title = "Zork | GUI-Based View";
     setWindowTitle(title);
-}
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+    show();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -237,4 +250,10 @@ void MainWindow::hide_text_elements(){
     ui->lineEdit->hide();
     ui->pushButton->hide();
 
+}
+
+void MainWindow::resetGame(){
+    this->hero->avatar->deleteLater();
+    this->monster->avatar->deleteLater();
+    this->item1->avatar->deleteLater();
 }

@@ -1,8 +1,11 @@
 #include "hero.h"
 #include <QPropertyAnimation>
 
-Hero::Hero()
+Hero::Hero(Dialog *deadDialog, Dialog *wonDialog, MainWindow *w)
 {
+    this->deadDialog = deadDialog;
+    this->wonDialog = wonDialog;
+    this->w = w;
 }
 
 
@@ -58,9 +61,16 @@ void Hero::moveDirection(int x, int y) {
             if(killed) {
                 this->avatar->monster->avatar->deleteLater();
                 this->avatar->monster->avatar->path = "";
+                wonDialog->raise();
+                wonDialog->show();
+
+                w->runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
             } else {
-                this->avatar->deleteLater();
-                this->avatar->path = "";
+//                this->avatar->deleteLater();
+//                this->avatar->path = "";
+                this->avatar->hide();
+                deadDialog->raise();
+                deadDialog->show();
             }
         }
     }

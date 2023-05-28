@@ -2,12 +2,9 @@
 #include <string>
 #include <vector>
 
-Item::Item(std::string name, int value, std::vector<std::string> abilities, AvatarWidget *avatar)
+Item::Item(std::string name)
 {
     this->name = name;
-    this->value = value;
-    this->abilities = abilities;
-    this->avatar = avatar;
 }
 
 //std::string Item::description() {
