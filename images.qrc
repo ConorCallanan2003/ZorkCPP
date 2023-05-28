@@ -11,5 +11,8 @@
         <file>sword.png</file>
         <file>gun.png</file>
         <file>hero.png</file>
+        <file>../../you-died-.gif</file>
+        <file>you-died.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

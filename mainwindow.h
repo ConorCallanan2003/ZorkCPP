@@ -9,6 +9,7 @@
 #include "avatarwidget.h"
 #include "monster.h"
 #include "item.h"
+#include "hero.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -60,7 +61,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QDialog *dialog;
-    HeroAvatar *heroAvatar;
+//    HeroAvatar *heroAvatar;
+    Hero *hero;
 //    AvatarWidget *monster;
     Monster *monster;
 //    AvatarWidget *item1;

@@ -4,16 +4,21 @@
 #include "monster.h"
 //#include "hero.h"
 
+
 class HeroAvatar : public AvatarWidget
 {
 public:
-    HeroAvatar(QWidget *parent = nullptr, QPointF *startPos = new QPointF(0, 0), std::string path = ":images/hero.png", Monster *monster = nullptr, Item *item1 = nullptr/*, Hero *hero*/);
+    HeroAvatar(QWidget *parent = nullptr, QPointF *startPos = new QPointF(0, 0), std::string path = ":images/hero.png", Monster *monster = nullptr, Item *item1 = nullptr/*, bool (*killptr)(Monster*) = nullptr*/);
 
     void moveDirection(int x, int y);
     bool overlapping(AvatarWidget *avatar);
-private:
+
+    // Move both of these from public and make friend of Hero
+//    bool (*killptr)(Monster*);
     Monster *monster;
     Item *item1;
+private:
+
 //    Hero *hero;
 };
 

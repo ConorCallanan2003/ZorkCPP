@@ -18,7 +18,6 @@ public:
 
     void moveDirection(int x, int y);
 
-
 protected:
     void paintEvent(QPaintEvent *event) override;
 

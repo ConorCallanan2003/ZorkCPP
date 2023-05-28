@@ -18,10 +18,6 @@ void AvatarWidget::paintEvent(QPaintEvent *)
     QImage image(this->path.c_str());
 
     QPainter painter(this);
-//    painter.setRenderHint(QPainter::Antialiasing); // set anti-aliasing for smooth edges
-//    painter.setPen(Qt::black); // set the pen color to black
-//    painter.setBrush(Qt::red); // set the brush color to red
-//    painter.drawEllipse(rect()); // draw a circle that fits the widget's bounding rectangle
 
     QSizeF newSize = QSizeF(500, 500) * 0.25;
     QPointF newPos = QPointF(0,0);
@@ -33,9 +29,3 @@ void AvatarWidget::paintEvent(QPaintEvent *)
 
 }
 
-
-//void AvatarWidget::moveDirection(int x, int y) {
-
-
-
-//}

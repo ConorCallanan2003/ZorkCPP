@@ -3,6 +3,7 @@
 #include "avatarwidget.h"
 #include "heroavatar.h"
 #include "monster.h"
+#include "dialog.h"
 #include <iostream>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
+    Dialog youDiedBox = new AvatarWidget(this, new QPointF(250, 250), ":images/you-died.png");
+
     AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), ":images/demon.png");
     AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), ":images/sword.png");
 
@@ -30,7 +33,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     monster = new Monster(item1, monsterAvatar);
 
-    heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
+    hero = new Hero();
+
+    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
+
+//    bool (Hero::*funcptr)(Monster* target) =
+
+//    heroAvatar->killptr = &Hero::kill;
+
+    hero->avatar = heroAvatar;
 
     std::string mapPath = ":/images/field.png";
 
@@ -144,7 +155,7 @@ void MainWindow::westclicked()
 //    HeroAvatar *heroAvatar = this->hero;
 
 
-    heroAvatar->moveDirection(-50, 0);
+    hero->moveDirection(-50, 0);
 
 }
 
@@ -153,7 +164,7 @@ void MainWindow::southclicked()
 {
 //    HeroAvatar *heroAvatar = this->hero;
 
-    heroAvatar->moveDirection(0, 50);
+    hero->moveDirection(0, 50);
 }
 
 
@@ -166,7 +177,7 @@ void MainWindow::northclicked()
 //    int newY = heroAvatar->y() - 100;
 //    heroAvatar->move(newX, newY);
 
-    heroAvatar->moveDirection(0, -50);
+    hero->moveDirection(0, -50);
 
 }
 
@@ -180,7 +191,7 @@ void MainWindow::eastclicked()
 //    int oldY = heroAvatar->y();
 //    int newX = oldX + 100;
 
-    heroAvatar->moveDirection(50, 0);
+    hero->moveDirection(50, 0);
 
 }
 
@@ -192,7 +203,7 @@ void MainWindow::hide_ui_elements()
     this->eastButton->hide();
     this->westButton->hide();
 
-    this->heroAvatar->hide();
+    this->hero->avatar->hide();
     this->monster->avatar->hide();
     this->item1->avatar->hide();
 
@@ -206,7 +217,7 @@ void MainWindow::show_ui_elements()
     this->eastButton->show();
     this->westButton->show();
 
-    this->heroAvatar->show();
+    this->hero->avatar->show();
     this->monster->avatar->show();
     this->item1->avatar->show();
 

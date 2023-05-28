@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     avatarwidget.cpp \
+    dialog.cpp \
     hero.cpp \
     heroavatar.cpp \
     item.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     avatarwidget.h \
+    dialog.h \
     hero.h \
     heroavatar.h \
     item.h \
