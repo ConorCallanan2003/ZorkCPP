@@ -63,16 +63,15 @@ void Hero::moveDirection(int x, int y) {
             if(killed) {
                 wonDialog->raise();
                 wonDialog->show();
-                this->moveDirection(50, 50);
-                std::this_thread::sleep_for(std::chrono::seconds(3));
-                w->close();
-                MainWindow *w2 = new MainWindow();
-
-                w2->runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/sword.png", new Item("Sword"));
-
+                if(Level::levelIndex < (Level::levels.size()-1)) {
+                    w->close();
+                    MainWindow *w2 = new MainWindow();
+                    int index = Level::levelIndex;
+                    Level level = Level::levels[index];
+                    Level::levelIndex++;
+                    w2->runGame(&level);
+                }
             } else {
-//                this->avatar->deleteLater();
-//                this->avatar->path = "";
                 this->avatar->hide();
                 deadDialog->raise();
                 deadDialog->show();
@@ -85,6 +84,22 @@ void Hero::moveDirection(int x, int y) {
             this->avatar->item1->avatar->deleteLater();
             this->avatar->item1->avatar->path = "";
             take(this->avatar->item1);
+        }
+    }
+
+    if(this->avatar->item2->avatar->path != ""){
+        if(this->avatar->overlapping(this->avatar->item2->avatar)) {
+            this->avatar->item2->avatar->deleteLater();
+            this->avatar->item2->avatar->path = "";
+            take(this->avatar->item2);
+        }
+    }
+
+    if(this->avatar->item3->avatar->path != ""){
+        if(this->avatar->overlapping(this->avatar->item3->avatar)) {
+            this->avatar->item3->avatar->deleteLater();
+            this->avatar->item3->avatar->path = "";
+            take(this->avatar->item3);
         }
     }
 

@@ -35,11 +35,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::start() {
 
-    runGame(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword"));
+//    extern std::vector<Level*> levels;
+
+    runGame(&Level::levels[0]);
+
+//    runGame(new Level(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword")));
 
 }
 
-int MainWindow::runGame(std::string mapPath, std::string monsterPath, std::string item1Path, Item *item1) {
+int MainWindow::runGame(Level *level) {
 
     ui->setupUi(this);
     hide_text_elements();
@@ -51,17 +55,25 @@ int MainWindow::runGame(std::string mapPath, std::string monsterPath, std::strin
     deadDialog->hide();
     wonDialog->hide();
 
-    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), monsterPath);
-    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), item1Path);
+    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), level->monsterPath);
+    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), level->item1->imagePath);
+    AvatarWidget *item2Avatar = new AvatarWidget(this, new QPointF(380, 550), level->item2->imagePath);
+    AvatarWidget *item3Avatar = new AvatarWidget(this, new QPointF(400, 50), level->item3->imagePath);
+
+    item1 = level->item1;
+    item2 = level->item2;
+    item3 = level->item3;
 
     item1->avatar = item1Avatar;
-    monster = new Monster(item1, monsterAvatar);
+    item2->avatar = item2Avatar;
+    item3->avatar = item3Avatar;
+    monster = new Monster(item2, monsterAvatar);
     hero = new Hero(deadDialog, wonDialog, this);
 
-    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1);
+    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1, item2, item3);
     hero->avatar = heroAvatar;
 
-    QPixmap pixmap(mapPath.c_str());
+    QPixmap pixmap(level->mapPath.c_str());
     pixmap = pixmap.scaled(QSize(770, 770));
     QPalette palette;
     palette.setBrush(QPalette::Window, pixmap);
@@ -86,6 +98,8 @@ int MainWindow::runGame(std::string mapPath, std::string monsterPath, std::strin
     setWindowTitle(title);
 
     show();
+
+    return 0;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

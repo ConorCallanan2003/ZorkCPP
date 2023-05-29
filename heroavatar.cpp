@@ -4,10 +4,12 @@
 
 typedef int (*FuncPtr)(int);
 
-HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, Monster *monster, Item *item1/*, bool (*killptr)(Monster*)*/)
+HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, Monster *monster, Item *item1, Item *item2, Item *item3)
     : AvatarWidget(parent, startPos, path) {
     this->monster = monster;
     this->item1 = item1;
+    this->item2 = item2;
+    this->item3 = item3;
 }
 
 

@@ -7,13 +7,14 @@
 class Item
 {
 public:
-    Item(std::string name);
+    Item(std::string name, std::string imagePath);
 
     AvatarWidget *avatar;
 
     std::string description();
 
     std::string name;
+    std::string imagePath;
 
     void generateLevel();
 };

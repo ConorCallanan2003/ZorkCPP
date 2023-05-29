@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QDialog>
 #include <QPushButton>
-#include "level.h"
 #include "heroavatar.h"
 #include "avatarwidget.h"
 #include "monster.h"
@@ -12,6 +11,7 @@
 #include "hero.h"
 #include "dialog.h"
 #include "mainwindow.h"
+#include "level.h"
 
 class Hero;
 
@@ -34,7 +34,7 @@ public:
     QPushButton *eastButton;
     QPushButton *westButton;
 
-    int runGame(std::string mapPath, std::string monsterPath, std::string item1Path, Item *item1);
+    int runGame(Level *level);
     void start();
 
     void resetGame();
@@ -78,5 +78,7 @@ private:
     Monster *monster;
 //    AvatarWidget *item1;
     Item *item1;
+    Item *item2;
+    Item *item3;
 };
 #endif // MAINWINDOW_H
