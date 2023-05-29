@@ -24,6 +24,15 @@ void Hero::take(Item *item) {
 
 void Hero::moveDirection(int x, int y) {
 
+    if(w->congratsDialog != nullptr) {
+        w->congratsDialog->hide();
+    }
+
+    if(w->startDialog1 != nullptr && w->startDialog2 != nullptr) {
+        w->startDialog1->hide();
+        w->startDialog2->hide();
+    }
+
     QPropertyAnimation *animation = new QPropertyAnimation(this->avatar, "pos");
 
     animation->setDuration(200);
@@ -54,22 +63,25 @@ void Hero::moveDirection(int x, int y) {
     animation->setStartValue(startPos);
     animation->setEndValue(endPos);
 
-    this->avatar->xPos = endPos.x();
-    this->avatar->yPos = endPos.y();
+    avatar->xPos = endPos.x();
+    avatar->yPos = endPos.y();
 
     if(this->avatar->monster->avatar->path != "") {
         if(this->avatar->overlapping(this->avatar->monster->avatar)) {
             bool killed = kill(this->avatar->monster);
             if(killed) {
+                if(deadDialog != nullptr) {
+                    deadDialog->hide();
+                }
                 wonDialog->raise();
                 wonDialog->show();
-                if(Level::levelIndex < (Level::levels.size()-1)) {
+                Level::levelIndex++;
+                if(Level::levelIndex < (Level::levels.size())) {
                     w->close();
                     MainWindow *w2 = new MainWindow();
                     int index = Level::levelIndex;
-                    Level level = Level::levels[index];
-                    Level::levelIndex++;
-                    w2->runGame(&level);
+                    Level *level = Level::levels[index];
+                    w2->runGame(level);
                 }
             } else {
                 this->avatar->hide();
@@ -79,29 +91,73 @@ void Hero::moveDirection(int x, int y) {
         }
     }
 
-    if(this->avatar->item1->avatar->path != ""){
-        if(this->avatar->overlapping(this->avatar->item1->avatar)) {
-            this->avatar->item1->avatar->deleteLater();
-            this->avatar->item1->avatar->path = "";
-            take(this->avatar->item1);
+    for (Item* item : this->avatar->items) {
+        if(item->avatar->path != ""){
+            if(this->avatar->overlapping(item->avatar)) {
+                item->avatar->deleteLater();
+                item->avatar->path = "";
+                take(item);
+            }
         }
     }
 
-    if(this->avatar->item2->avatar->path != ""){
-        if(this->avatar->overlapping(this->avatar->item2->avatar)) {
-            this->avatar->item2->avatar->deleteLater();
-            this->avatar->item2->avatar->path = "";
-            take(this->avatar->item2);
-        }
-    }
-
-    if(this->avatar->item3->avatar->path != ""){
-        if(this->avatar->overlapping(this->avatar->item3->avatar)) {
-            this->avatar->item3->avatar->deleteLater();
-            this->avatar->item3->avatar->path = "";
-            take(this->avatar->item3);
-        }
-    }
 
     animation->start();
+}
+
+
+void Hero::moveTo(QPoint newPos) {
+
+    QPropertyAnimation *animation = new QPropertyAnimation(this->avatar, "pos");
+
+    animation->setDuration(200);
+
+    QPoint startPos = this->avatar->pos();
+
+    QPoint endPos = newPos;
+
+    animation->setStartValue(startPos);
+    animation->setEndValue(endPos);
+
+    avatar->xPos = endPos.x();
+    avatar->yPos = endPos.y();
+
+    if(this->avatar->monster->avatar->path != "") {
+        if(this->avatar->overlapping(this->avatar->monster->avatar)) {
+            bool killed = kill(this->avatar->monster);
+            if(killed) {
+                if(deadDialog != nullptr) {
+                    deadDialog->hide();
+                }
+                wonDialog->raise();
+                wonDialog->show();
+                Level::levelIndex++;
+                if(Level::levelIndex < (Level::levels.size())) {
+                    w->close();
+                    MainWindow *w2 = new MainWindow();
+                    int index = Level::levelIndex;
+                    Level *level = Level::levels[index];
+                    w2->runGame(level);
+                }
+            } else {
+                this->avatar->hide();
+                deadDialog->raise();
+                deadDialog->show();
+            }
+        }
+    }
+
+    for (Item* item : this->avatar->items) {
+        if(item->avatar->path != ""){
+            if(this->avatar->overlapping(item->avatar)) {
+                item->avatar->deleteLater();
+                item->avatar->path = "";
+                take(item);
+            }
+        }
+    }
+
+
+    animation->start();
+
 }

@@ -14,6 +14,9 @@
         <file>../../you-died-.gif</file>
         <file>you-died.png</file>
         <file>you-won.png</file>
+        <file>expos1.png</file>
+        <file>expos2.png</file>
+        <file>congrats.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

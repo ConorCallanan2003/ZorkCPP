@@ -7,15 +7,13 @@
 class Level
 {
 public:
-    Level(std::string mapPath, std::string monsterPath, Item *item1 = nullptr, Item *item2 = nullptr, Item *item3 = nullptr);
+    Level(std::string mapPath, std::string monsterPath, std::vector<Item*> items);
 
     std::string mapPath;
     std::string monsterPath;
-    Item *item1;
-    Item *item2;
-    Item *item3;
+    std::vector<Item*> items;
 
-    static std::vector<Level> levels;
+    static std::vector<Level*> levels;
     static int levelIndex;
 };
 

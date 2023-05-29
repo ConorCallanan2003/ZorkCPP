@@ -20,6 +20,7 @@ public:
     bool kill(Monster *monster);
     void take(Item *item);
     void moveDirection(int x, int y);
+    void moveTo(QPoint pos);
 
     Dialog *deadDialog;
     Dialog *wonDialog;

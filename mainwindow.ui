@@ -34,7 +34,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="submitButton">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -44,7 +44,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Submit</string>
     </property>
    </widget>
   </widget>

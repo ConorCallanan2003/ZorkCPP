@@ -28,19 +28,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//void game2() {
-//        qDebug() << "RAN";
-//    runGame(":/images/desert.png", ":/images/gremlin.png", ":/images/gold.png", new Item("Gold"), nullptr);
-//}
-
 void MainWindow::start() {
-
-//    extern std::vector<Level*> levels;
-
-    runGame(&Level::levels[0]);
-
-//    runGame(new Level(":/images/field.png", ":/images/goblin.png", ":/images/sword.png", new Item("Sword")));
-
+    runGame(Level::levels[0]);
 }
 
 int MainWindow::runGame(Level *level) {
@@ -49,29 +38,38 @@ int MainWindow::runGame(Level *level) {
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
-    Dialog *deadDialog = new Dialog(this, new QPointF(100, 100), ":images/you-died.png");
+    currentLevel = Level::levels[Level::levelIndex];
+
+    Dialog *deadDialog = new Dialog(this, new QPointF(100, 150), ":images/you-died.png");
     Dialog *wonDialog = new Dialog(this, new QPointF(100, 100), ":images/you-won.png");
+
+    congratsDialog = new Dialog(this, new QPointF(100, 0), ":images/congrats.png");
+    congratsDialog->lower();
 
     deadDialog->hide();
     wonDialog->hide();
 
     AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), level->monsterPath);
-    AvatarWidget *item1Avatar = new AvatarWidget(this, new QPointF(0, 450), level->item1->imagePath);
-    AvatarWidget *item2Avatar = new AvatarWidget(this, new QPointF(380, 550), level->item2->imagePath);
-    AvatarWidget *item3Avatar = new AvatarWidget(this, new QPointF(400, 50), level->item3->imagePath);
 
-    item1 = level->item1;
-    item2 = level->item2;
-    item3 = level->item3;
+    items = level->items;
 
-    item1->avatar = item1Avatar;
-    item2->avatar = item2Avatar;
-    item3->avatar = item3Avatar;
-    monster = new Monster(item2, monsterAvatar);
+    std::vector<QPointF*> points = {new QPointF(0, 450), new QPointF(350, 550), new QPointF(400, 50)};
+
+    for (int var = 0; var < level->items.size(); ++var) {
+        AvatarWidget *newItemAvatar = new AvatarWidget(this, points[var], level->items[var]->imagePath);
+        Item *newItem = items[var];
+        newItem->avatar = newItemAvatar;
+    }
+
+    int correctItem = std::rand() % 3;
+
+    monster = new Monster(items[correctItem], monsterAvatar);
     hero = new Hero(deadDialog, wonDialog, this);
 
-    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, item1, item2, item3);
+    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, items);
     hero->avatar = heroAvatar;
+
+
 
     QPixmap pixmap(level->mapPath.c_str());
     pixmap = pixmap.scaled(QSize(770, 770));
@@ -175,31 +173,18 @@ void MainWindow::enable_buttons() {
 
 void MainWindow::westclicked()
 {
-
-//    HeroAvatar *heroAvatar = this->hero;
-
-
     hero->moveDirection(-50, 0);
-
 }
 
 
 void MainWindow::southclicked()
 {
-//    HeroAvatar *heroAvatar = this->hero;
-
     hero->moveDirection(0, 50);
 }
 
 
 void MainWindow::northclicked()
 {
-
-//    HeroAvatar *heroAvatar = this->hero;
-
-//    int newX = heroAvatar->x();
-//    int newY = heroAvatar->y() - 100;
-//    heroAvatar->move(newX, newY);
 
     hero->moveDirection(0, -50);
 
@@ -209,13 +194,7 @@ void MainWindow::northclicked()
 void MainWindow::eastclicked()
 {
 
-//    HeroAvatar *heroAvatar = this->hero;
-
-//    int oldX = heroAvatar->x();
-//    int oldY = heroAvatar->y();
-//    int newX = oldX + 100;
-
-    hero->moveDirection(50, 0);
+   hero->moveDirection(50, 0);
 
 }
 
@@ -229,7 +208,9 @@ void MainWindow::hide_ui_elements()
 
     this->hero->avatar->hide();
     this->monster->avatar->hide();
-    this->item1->avatar->hide();
+    foreach (Item* item, this->items) {
+        item->avatar->hide();
+    }
 
 }
 
@@ -243,15 +224,17 @@ void MainWindow::show_ui_elements()
 
     this->hero->avatar->show();
     this->monster->avatar->show();
-    this->item1->avatar->show();
+    foreach (Item* item, this->items) {
+        item->avatar->show();
+    }
 
 }
 
 void MainWindow::show_text_elements(){
-
     this->ui->textBrowser->show();
     ui->lineEdit->show();
-    ui->pushButton->show();
+    ui->submitButton->show();
+
 
 }
 
@@ -259,12 +242,27 @@ void MainWindow::hide_text_elements(){
 
     this->ui->textBrowser->hide();
     ui->lineEdit->hide();
-    ui->pushButton->hide();
+    ui->submitButton->hide();
 
 }
 
 void MainWindow::resetGame(){
     this->hero->avatar->deleteLater();
     this->monster->avatar->deleteLater();
-    this->item1->avatar->deleteLater();
+    foreach (Item* item, this->items) {
+        item->avatar->deleteLater();
+    }
 }
+
+void MainWindow::on_submitButton_clicked()
+{
+    this->ui->textBrowser->clear();
+    QLineEdit *lineEdit = this->ui->lineEdit;
+    std::string result = commandHandler->handleCommand(lineEdit->text().toStdString(), currentLevel, hero);
+
+    this->ui->textBrowser->insertPlainText(QString(result.c_str()));
+
+    lineEdit->clear();
+//    hero->moveTo(new QPoint(0, 0));
+}
+

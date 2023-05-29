@@ -12,6 +12,9 @@
 #include "dialog.h"
 #include "mainwindow.h"
 #include "level.h"
+#include "commandhandler.h"
+
+class CommandHandler;
 
 class Hero;
 
@@ -38,6 +41,10 @@ public:
     void start();
 
     void resetGame();
+
+    Dialog* startDialog1;
+    Dialog* startDialog2;
+    Dialog* congratsDialog;
 
 //    void game2();
 
@@ -69,16 +76,16 @@ private slots:
 
 //    void *nextGame(MainWindow *w);
 
+    void on_submitButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QDialog *dialog;
-//    HeroAvatar *heroAvatar;
     Hero *hero;
-//    AvatarWidget *monster;
     Monster *monster;
-//    AvatarWidget *item1;
-    Item *item1;
-    Item *item2;
-    Item *item3;
+    std::vector<Item*> items;
+
+    Level *currentLevel;
+
+    CommandHandler *commandHandler;
 };
 #endif // MAINWINDOW_H
