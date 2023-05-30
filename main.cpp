@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "item.h"
 #include "level.h"
-
+#include "LevelInfoStruct.h"
 #include <QApplication>
 #include <string>
 #include <vector>
@@ -9,8 +9,18 @@
 #include <thread>
 //#include <QBrowser>
 
+//int levelIndex = 0;
+
+LevelInfo levelInfo;
+
+int levelIndex;
+
 int main(int argc, char *argv[])
 {
+
+    levelInfo.round = 0;
+    levelInfo.score = 0;
+
     QApplication a(argc, argv);
     Item *sword = new Item("sword", ":/images/sword.png");
     Item *gun = new Item("gun", ":/images/gun.png");

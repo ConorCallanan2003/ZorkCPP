@@ -2,9 +2,8 @@
 #include <string>
 #include <vector>
 
-Item::Item(std::string name, std::string imagePath)
+Item::Item(std::string name, std::string imagePath) : Thing(name)
 {
-    this->name = name;
     this->imagePath = imagePath;
 }
 

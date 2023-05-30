@@ -10,13 +10,19 @@ class Level
 public:
     Level(std::string mapPath, Monster *monster, std::vector<Item*> items, std::string name);
 
-    std::string mapPath;
     Monster *monster;
     std::vector<Item*> items;
     std::string name;
 
     static std::vector<Level*> levels;
-    static int levelIndex;
+//    static int levelIndex;
+
+private:
+    std::string mapPath;
+    int getScore();
+
+
+    friend class MainWindow;
 };
 
 #endif // LEVEL_H

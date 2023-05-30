@@ -16,11 +16,15 @@ SOURCES += \
     heroavatar.cpp \
     item.cpp \
     level.cpp \
+    living.cpp \
     main.cpp \
     mainwindow.cpp \
-    monster.cpp
+    monster.cpp \
+    movableavatar.cpp \
+    thing.cpp
 
 HEADERS += \
+    LevelInfoStruct.h \
     avatarwidget.h \
     commandhandler.h \
     dialog.h \
@@ -28,8 +32,11 @@ HEADERS += \
     heroavatar.h \
     item.h \
     level.h \
+    living.h \
     mainwindow.h \
-    monster.h
+    monster.h \
+    movableavatar.h \
+    thing.h
 
 FORMS += \
     mainwindow.ui

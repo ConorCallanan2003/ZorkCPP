@@ -14,7 +14,9 @@ class AvatarWidget : public QWidget
 public:
     AvatarWidget(QWidget *parent = nullptr, QPointF *startPos = new QPointF(0, 0), std::string path = ":images/hero.png");
 
-    virtual ~AvatarWidget() {}
+    virtual ~AvatarWidget() {
+        delete startPos;
+    }
 
     int xPos;
     int yPos;

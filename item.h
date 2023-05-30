@@ -3,17 +3,21 @@
 #include <string>
 #include <vector>
 #include "avatarwidget.h"
+#include "thing.h"
 
-class Item
+struct ItemDetails {
+    unsigned int value : 10;
+};
+
+class Item : public Thing
 {
 public:
     Item(std::string name, std::string imagePath);
 
     AvatarWidget *avatar;
 
-    std::string description();
+    ItemDetails itemDetails;
 
-    std::string name;
     std::string imagePath;
 
     void generateLevel();

@@ -2,15 +2,14 @@
 #define MONSTER_H
 #include "item.h"
 #include "avatarwidget.h"
+#include "living.h"
 
-class Monster
+class Monster : public Thing, public Living
 {
 public:
     Monster(Item *weakness, std::string name, std::string path);
 
     AvatarWidget *avatar;
-    bool dead;
-    std::string name;
     Item *weakness;
     std::string path;
 };

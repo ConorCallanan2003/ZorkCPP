@@ -9,5 +9,4 @@ Level::Level(std::string mapPath, Monster *monster, std::vector<Item*> items, st
 }
 
 std::vector<Level*> Level::levels = {};
-int Level::levelIndex = 0;
 

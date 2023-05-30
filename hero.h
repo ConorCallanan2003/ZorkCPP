@@ -8,7 +8,9 @@
 
 class MainWindow;
 
-class Hero
+class HeroAvatar;
+
+class Hero : public Living
 {
 public:
     Hero(Dialog *deadDialog, Dialog *wonDialog, MainWindow *w);

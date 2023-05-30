@@ -1,20 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "avatarwidget.h"
-#include "heroavatar.h"
-#include "monster.h"
-#include "dialog.h"
-#include <iostream>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <thread>
-#include <QPropertyAnimation>
-#include <QPalette>
-#include <QSize>
-#include <QKeyEvent>
-#include <QPointF>
-#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,6 +23,10 @@ int MainWindow::runGame(Level *level) {
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
+    extern LevelInfo levelInfo;
+
+    ui->label->text() = QString::number(getScore(levelInfo));
+
     ui->textBrowser->insertHtml("<h1>Welcome!</h1><p>You find yourself in a VERY dangerous place. You will meet many monsters, but also the tools necessary to defeat them. Choose wisely...</p>");
     ui->textBrowser->insertHtml("<br><br><code>COMMANDS AVAILABLE: goto {item or monster}, take {item}, kill {monster}</code>");
     std::string itemsString = "";
@@ -49,7 +38,9 @@ int MainWindow::runGame(Level *level) {
     ui->textBrowser->insertHtml(QString::fromStdString(string1));
 //    ui->textBrowser->insertHtml();
 
-    currentLevel = Level::levels[Level::levelIndex];
+    extern int levelIndex;
+
+    currentLevel = Level::levels[levelIndex];
 
     deadDialog = new Dialog(this, new QPointF(100, 150), ":images/you-died.png");
     wonDialog = new Dialog(this, new QPointF(100, 100), ":images/you-won.png");
@@ -70,13 +61,11 @@ int MainWindow::runGame(Level *level) {
         newItem->avatar = newItemAvatar;
     }
 
-    int correctItem = std::rand() % 3;
-
     level->monster->avatar = new AvatarWidget(this, new QPointF(100, 100), level->monster->path);
 
     hero = new Hero(deadDialog, wonDialog, this);
 
-    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", level->monster, items);
+    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", level->monster, hero, items, this);
     hero->avatar = heroAvatar;
 
     QPixmap pixmap(level->mapPath.c_str());
@@ -84,6 +73,8 @@ int MainWindow::runGame(Level *level) {
     QPalette palette;
     palette.setBrush(QPalette::Window, pixmap);
     this->setPalette(palette);
+
+    ui->label->raise();
 
     this->northButton = new QPushButton("North", this);
     this->southButton = new QPushButton("South", this);
@@ -181,20 +172,20 @@ void MainWindow::enable_buttons() {
 
 void MainWindow::westclicked()
 {
-    hero->moveDirection(-50, 0);
+    hero->avatar->moveDirection(-50, 0);
 }
 
 
 void MainWindow::southclicked()
 {
-    hero->moveDirection(0, 50);
+    hero->avatar->moveDirection(0, 50);
 }
 
 
 void MainWindow::northclicked()
 {
 
-    hero->moveDirection(0, -50);
+    hero->avatar->moveDirection(0, -50);
 
 }
 
@@ -202,7 +193,7 @@ void MainWindow::northclicked()
 void MainWindow::eastclicked()
 {
 
-   hero->moveDirection(50, 0);
+   hero->avatar->moveDirection(50, 0);
 
 }
 
@@ -290,3 +281,11 @@ void MainWindow::on_submitButton_clicked()
 //    hero->moveTo(new QPoint(0, 0));
 }
 
+template <typename T>
+T multiply(T a, T b) {
+    return a * b;
+}
+
+int MainWindow::getScore(LevelInfo levelInfo) {
+    return multiply(levelInfo.round, levelInfo.score);
+}
