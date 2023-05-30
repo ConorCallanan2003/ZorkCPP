@@ -19,14 +19,13 @@ bool Hero::kill(Monster *monster) {
 }
 
 void Hero::take(Item *item) {
+//    item->avatar->deleteLater();
+//    item->avatar->path = "";
+    delete(item->avatar);
     this->inventory = item;
 }
 
 void Hero::moveDirection(int x, int y) {
-
-    if(inventory != nullptr) {
-        qDebug() << inventory->name.c_str();
-    }
 
     if(w->congratsDialog != nullptr) {
         w->congratsDialog->hide();
@@ -71,7 +70,7 @@ void Hero::moveDirection(int x, int y) {
     avatar->yPos = endPos.y();
 
     if(this->avatar->monster->avatar->path != "") {
-        if(this->avatar->overlapping(this->avatar->monster->avatar)) {
+        if(*avatar==(this->avatar->monster->avatar)) {
             bool killed = kill(this->avatar->monster);
             if(killed) {
                 if(deadDialog != nullptr) {
@@ -95,17 +94,15 @@ void Hero::moveDirection(int x, int y) {
         }
     }
 
-    if(inventory == nullptr) {
+//    if(inventory == nullptr) {
         for (Item* item : this->avatar->items) {
             if(item->avatar->path != ""){
-                if(this->avatar->overlapping(item->avatar)) {
-                    item->avatar->deleteLater();
-                    item->avatar->path = "";
+                if(*avatar==item->avatar) {
                     take(item);
                 }
             }
         }
-    }
+//    }
     animation->start();
 }
 

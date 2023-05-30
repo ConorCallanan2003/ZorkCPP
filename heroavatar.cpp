@@ -11,20 +11,6 @@ HeroAvatar::HeroAvatar(QWidget *parent, QPointF *startPos, std::string path, Mon
 }
 
 
-
-bool HeroAvatar::overlapping(AvatarWidget *avatar) {
-
-    int hx = pos().x() + (width()/2);
-    int hy = pos().y() + (height()/2);
-
-    int ax = avatar->pos().x() + (avatar->width()/2);
-    int ay = avatar->pos().y() + (avatar->height()/2);
-
-    if (hx < (ax+150) && hx > (ax-150)) {
-        if (hy < (ay+150) && hy > (ay-150)) {
-            return true;
-        }
-    }
-    return false;
-
+bool HeroAvatar::operator==(AvatarWidget *otherAvatar) {
+    return overlapping(otherAvatar);
 }

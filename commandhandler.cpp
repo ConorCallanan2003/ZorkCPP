@@ -11,17 +11,23 @@ std::string CommandHandler::handleCommand(std::string command, Level *currentLev
         std::string target = command.substr(5).c_str();
 
         for(Item *item : currentLevel->items) {
-            if(target == item->name) {
-                hero->moveTo(item->avatar->pos());
-                return "You are now beside " + item->name;
+            if(item != nullptr && target == item->name) {
+                if(item->avatar->pos().y() > 250) {
+                    QPoint newLoc = QPoint(item->avatar->pos().x(), item->avatar->pos().y()-150);
+                    hero->moveTo(newLoc);
+                } else {
+                    QPoint newLoc = QPoint(item->avatar->pos().x(), item->avatar->pos().y()+150);
+                    hero->moveTo(newLoc);
+                }
+                return "<h2>You are now beside the " + item->name + "</h2>";
             }
         }
         if(target == currentLevel->monster->name) {
             hero->moveTo(currentLevel->monster->avatar->pos());
-            return "You are now beside " + currentLevel->monster->name;
+            return "<h2>You are now beside the " + currentLevel->monster->name + "</h2>";
         }
 
-        return "Item does not exist";
+        return "<h2>Item does not exist</h2>";
 
     }
 
@@ -29,40 +35,40 @@ std::string CommandHandler::handleCommand(std::string command, Level *currentLev
         std::string target = command.substr(5).c_str();
 
         for(Item *item : currentLevel->items) {
-            if(target == item->name) {
-                if(hero->avatar->overlapping(item->avatar)) {
+            if(item != nullptr && target == item->name) {
+                if(hero->avatar==(item->avatar)) {
                     item->avatar->path = "";
                     hero->take(item);
-                    return item->name + " is now in your inventory";
+
                 }
+                return "<h2>" + item->name + " is now in your inventory</h2>";
             }
         }
-        return "You are not close enough to this item to take it";
+        return "<h2>You are not close enough to this item to take it</h2>";
 
     }
 
     if(command.substr(0, 4) == "kill") {
         std::string target = command.substr(5).c_str();
-        if(target == currentLevel->monster->name) {
-            if(hero->avatar->overlapping(currentLevel->monster->avatar)) {
+        if(currentLevel->monster != nullptr && target == currentLevel->monster->name) {
+            if(hero->avatar==(currentLevel->monster->avatar)) {
                 currentLevel->monster->avatar->path = "";
                 hero->kill(currentLevel->monster);
-//                w->wonDialog->raise();
-//                w->wonDialog->show();
                 Level::levelIndex++;
                 if(Level::levelIndex < (Level::levels.size())) {
                     MainWindow *w2 = new MainWindow();
                     int index = Level::levelIndex;
                     Level *level = Level::levels[index];
                     w2->runGame(level);
-//                    w->close();
+                    qDebug() << &w2;
+                    return "survived";
                 }
             }
         }
-        return "You are not close enough to this item to take it";
+        return "<h1>You DIED!</h1>";
 
     }
 
-    return "Invalid command";
+    return "<h1>INVALID COMMAND</h1>";
 
 }

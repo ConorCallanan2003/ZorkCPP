@@ -7,6 +7,7 @@
 #include <cctype>
 #include <iostream>
 #include <string>
+#include <QPoint>
 
 class Hero;
 

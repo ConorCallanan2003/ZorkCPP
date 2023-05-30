@@ -214,10 +214,16 @@ void MainWindow::hide_ui_elements()
     this->eastButton->hide();
     this->westButton->hide();
 
-    this->hero->avatar->hide();
-    this->currentLevel->monster->avatar->hide();
+    if(this->hero->avatar->path != "") {
+        this->hero->avatar->hide();
+    }
+    if(this->currentLevel->monster->avatar->path != "") {
+        this->currentLevel->monster->avatar->hide();
+    }
     foreach (Item* item, this->items) {
-        item->avatar->hide();
+        if(item->avatar->path != "") {
+            item->avatar->hide();
+        }
     }
 
 }
@@ -230,20 +236,26 @@ void MainWindow::show_ui_elements()
     this->eastButton->show();
     this->westButton->show();
 
-    this->hero->avatar->show();
-    this->currentLevel->monster->avatar->show();
+    if(this->hero->avatar->path != "") {
+        this->hero->avatar->show();
+    }
+    if(this->currentLevel->monster->avatar->path != "") {
+        this->currentLevel->monster->avatar->show();
+    }
     foreach (Item* item, this->items) {
-        item->avatar->show();
+        if(item->avatar->path != "") {
+            item->avatar->show();
+        }
     }
 
 }
 
 void MainWindow::show_text_elements(){
-    this->ui->textBrowser->show();
-    ui->lineEdit->show();
-    ui->submitButton->show();
-
-
+    if(this->ui->textBrowser != nullptr && ui->lineEdit != nullptr && ui->submitButton) {
+        this->ui->textBrowser->show();
+        ui->lineEdit->show();
+        ui->submitButton->show();
+    }
 }
 
 void MainWindow::hide_text_elements(){
@@ -267,8 +279,12 @@ void MainWindow::on_submitButton_clicked()
     this->ui->textBrowser->clear();
     QLineEdit *lineEdit = this->ui->lineEdit;
     std::string result = commandHandler->handleCommand(lineEdit->text().toStdString(), currentLevel, hero);
-
-    this->ui->textBrowser->insertPlainText(QString(result.c_str()));
+    if(result == "survived") {
+        this->close();
+    }
+//    if(result == "dead") {
+//    }
+    this->ui->textBrowser->insertHtml(QString(result.c_str()));
 
     lineEdit->clear();
 //    hero->moveTo(new QPoint(0, 0));

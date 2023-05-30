@@ -14,6 +14,8 @@ class AvatarWidget : public QWidget
 public:
     AvatarWidget(QWidget *parent = nullptr, QPointF *startPos = new QPointF(0, 0), std::string path = ":images/hero.png");
 
+    virtual ~AvatarWidget() {}
+
     int xPos;
     int yPos;
 
@@ -22,12 +24,14 @@ public:
 
     void moveDirection(int x, int y);
 
+//    bool operator+(AvatarWidget *otherAvatar);
+    bool overlapping(AvatarWidget *avatar);
+
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 
 private:
     int m_diameter;
 };
-
 
 #endif
