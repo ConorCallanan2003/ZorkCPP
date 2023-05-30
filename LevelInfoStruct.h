@@ -2,7 +2,7 @@
 #define LEVELINFOSTRUCT_H
 
 struct LevelInfo {
-    unsigned int score : 4;
+    unsigned int score : 8;
     unsigned int round : 3;
 };
 

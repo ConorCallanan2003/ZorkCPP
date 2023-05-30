@@ -18,8 +18,9 @@ bool Hero::kill(Monster *monster) {
         extern LevelInfo levelInfo;
         levelInfo.score += 10;
         levelInfo.round += 1;
-        qDebug() << levelInfo.round;
         qDebug() << levelInfo.score;
+        qDebug() << levelInfo.round;
+        w->ui->label->setText(QString("Score: ") + QString::number(w->getScore(levelInfo)));
         return true;
     }
     return false;
@@ -28,6 +29,9 @@ bool Hero::kill(Monster *monster) {
 void Hero::take(Item *item) {
     extern LevelInfo levelInfo;
     levelInfo.score += 10;
+    qDebug() << levelInfo.score;
+    qDebug() << levelInfo.round;
+    w->ui->label->setText(QString("Score: ") + QString::number(w->getScore(levelInfo)));
     delete(item->avatar);
     this->inventory = item;
 }

@@ -47,6 +47,8 @@ public:
 
     void resetGame();
 
+    int getScore(LevelInfo);
+
     Dialog* wonDialog;
     Dialog* deadDialog;
     Dialog* startDialog1;
@@ -97,8 +99,8 @@ private:
 
     Level *currentLevel;
 
-    int getScore(LevelInfo);
-
     CommandHandler *commandHandler;
+
+    friend class Hero;
 };
 #endif // MAINWINDOW_H

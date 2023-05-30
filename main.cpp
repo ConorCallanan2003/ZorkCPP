@@ -9,8 +9,6 @@
 #include <thread>
 //#include <QBrowser>
 
-//int levelIndex = 0;
-
 LevelInfo levelInfo;
 
 int levelIndex;
@@ -18,7 +16,7 @@ int levelIndex;
 int main(int argc, char *argv[])
 {
 
-    levelInfo.round = 0;
+    levelInfo.round = 1;
     levelInfo.score = 0;
 
     QApplication a(argc, argv);

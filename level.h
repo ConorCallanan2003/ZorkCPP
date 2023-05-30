@@ -19,7 +19,6 @@ public:
 
 private:
     std::string mapPath;
-    int getScore();
 
 
     friend class MainWindow;

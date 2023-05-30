@@ -25,7 +25,9 @@ int MainWindow::runGame(Level *level) {
 
     extern LevelInfo levelInfo;
 
-    ui->label->text() = QString::number(getScore(levelInfo));
+    ui->label->setText(QString("Score: ") + QString::number(getScore(levelInfo)));
+    ui->label->setStyleSheet("color: white;");
+
 
     ui->textBrowser->insertHtml("<h1>Welcome!</h1><p>You find yourself in a VERY dangerous place. You will meet many monsters, but also the tools necessary to defeat them. Choose wisely...</p>");
     ui->textBrowser->insertHtml("<br><br><code>COMMANDS AVAILABLE: goto {item or monster}, take {item}, kill {monster}</code>");
@@ -75,6 +77,7 @@ int MainWindow::runGame(Level *level) {
     this->setPalette(palette);
 
     ui->label->raise();
+    ui->label->show();
 
     this->northButton = new QPushButton("North", this);
     this->southButton = new QPushButton("South", this);
@@ -217,6 +220,8 @@ void MainWindow::hide_ui_elements()
         }
     }
 
+    ui->label->setStyleSheet("color: black;");
+
 }
 
 void MainWindow::show_ui_elements()
@@ -239,6 +244,7 @@ void MainWindow::show_ui_elements()
         }
     }
 
+    ui->label->setStyleSheet("color: white;");
 }
 
 void MainWindow::show_text_elements(){
@@ -273,12 +279,9 @@ void MainWindow::on_submitButton_clicked()
     if(result == "survived") {
         this->close();
     }
-//    if(result == "dead") {
-//    }
     this->ui->textBrowser->insertHtml(QString(result.c_str()));
 
     lineEdit->clear();
-//    hero->moveTo(new QPoint(0, 0));
 }
 
 template <typename T>
