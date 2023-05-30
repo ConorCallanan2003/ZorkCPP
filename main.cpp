@@ -12,17 +12,23 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    Item *sword = new Item("sword", ":/images/sword.png");
+    Item *gun = new Item("gun", ":/images/gun.png");
+    Item *gold = new Item("gold", ":/images/gold.png");
 
-    std::vector<Item*> items1 = {new Item("Sword", ":/images/sword.png"), new Item("Gold", ":/images/gold.png"), new Item("Gun", ":/images/gun.png")};
-    std::vector<Item*> items2 = {new Item("Gun", ":/images/gun.png"), new Item("Gold", ":/images/gold.png"), new Item("Sword", ":/images/sword.png")};
-    std::vector<Item*> items3 = {new Item("Gun", ":/images/gun.png"), new Item("Gold", ":/images/gold.png"), new Item("Sword", ":/images/sword.png")};
-    //std::vector<*Item> items4 = {new Item("Gun", ":/images/gun.png"), new Item("Gold", ":/images/gold.png"), new Item("Sword", ":/images/sword.png")};
-
-    Level::levels.push_back(new Level(":/images/field.png", ":/images/goblin.png", items1));
-    Level::levels.push_back(new Level(":/images/graveyard.png", ":/images/demon.png", items2));
-    Level::levels.push_back(new Level(":/images/field.png", ":/images/goblin.png", items3));
+    std::vector<Item*> items1 = {sword, gun, gold};
+    std::vector<Item*> items2 = {gun, gold, sword};
+    std::vector<Item*> items3 = {gold, sword, gun};
 
     MainWindow w;
+
+    Monster *goblin = new Monster(gold, "goblin", ":/images/goblin.png");
+    Monster *demon = new Monster(sword, "demon", ":/images/demon.png");
+    Monster *gremlin= new Monster(gun, "gremlin", ":/images/gremlin.png");
+
+    Level::levels.push_back(new Level(":/images/field.png", goblin, items1, "field"));
+    Level::levels.push_back(new Level(":/images/graveyard.png", demon, items2, "graveyard"));
+    Level::levels.push_back(new Level(":/images/desert.png", gremlin, items3, "desert"));
 
     w.startDialog1 = new Dialog(&w, new QPointF(100, 0), ":images/expos1.png");
     w.startDialog2 = new Dialog(&w, new QPointF(100, 100), ":images/expos2.png");

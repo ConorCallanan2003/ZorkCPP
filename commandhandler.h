@@ -3,6 +3,10 @@
 #include "mainwindow.h"
 #include "level.h"
 #include "hero.h"
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <string>
 
 class Hero;
 

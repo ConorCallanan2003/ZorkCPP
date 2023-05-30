@@ -42,6 +42,8 @@ public:
 
     void resetGame();
 
+    Dialog* wonDialog;
+    Dialog* deadDialog;
     Dialog* startDialog1;
     Dialog* startDialog2;
     Dialog* congratsDialog;
@@ -81,7 +83,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Hero *hero;
-    Monster *monster;
     std::vector<Item*> items;
 
     Level *currentLevel;

@@ -38,18 +38,27 @@ int MainWindow::runGame(Level *level) {
     hide_text_elements();
     setFocusPolicy(Qt::StrongFocus);
 
+    ui->textBrowser->insertHtml("<h1>Welcome!</h1><p>You find yourself in a VERY dangerous place. You will meet many monsters, but also the tools necessary to defeat them. Choose wisely...</p>");
+    ui->textBrowser->insertHtml("<br><br><code>COMMANDS AVAILABLE: goto {item or monster}, take {item}, kill {monster}</code>");
+    std::string itemsString = "";
+    itemsString += level->items[0]->name + ", a ";
+    itemsString += level->items[1]->name + ", and a ";
+    itemsString += level->items[2]->name + ".";
+
+    std::string string1 = "<br><br>You are in a " + level->name + ". You see a " + level->monster->name + ", a " + itemsString;
+    ui->textBrowser->insertHtml(QString::fromStdString(string1));
+//    ui->textBrowser->insertHtml();
+
     currentLevel = Level::levels[Level::levelIndex];
 
-    Dialog *deadDialog = new Dialog(this, new QPointF(100, 150), ":images/you-died.png");
-    Dialog *wonDialog = new Dialog(this, new QPointF(100, 100), ":images/you-won.png");
+    deadDialog = new Dialog(this, new QPointF(100, 150), ":images/you-died.png");
+    wonDialog = new Dialog(this, new QPointF(100, 100), ":images/you-won.png");
 
     congratsDialog = new Dialog(this, new QPointF(100, 0), ":images/congrats.png");
     congratsDialog->lower();
 
     deadDialog->hide();
     wonDialog->hide();
-
-    AvatarWidget *monsterAvatar = new AvatarWidget(this, new QPointF(100, 100), level->monsterPath);
 
     items = level->items;
 
@@ -63,13 +72,12 @@ int MainWindow::runGame(Level *level) {
 
     int correctItem = std::rand() % 3;
 
-    monster = new Monster(items[correctItem], monsterAvatar);
+    level->monster->avatar = new AvatarWidget(this, new QPointF(100, 100), level->monster->path);
+
     hero = new Hero(deadDialog, wonDialog, this);
 
-    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", monster, items);
+    HeroAvatar *heroAvatar = new HeroAvatar(this, new QPointF(651, 350), ":images/hero.png", level->monster, items);
     hero->avatar = heroAvatar;
-
-
 
     QPixmap pixmap(level->mapPath.c_str());
     pixmap = pixmap.scaled(QSize(770, 770));
@@ -207,7 +215,7 @@ void MainWindow::hide_ui_elements()
     this->westButton->hide();
 
     this->hero->avatar->hide();
-    this->monster->avatar->hide();
+    this->currentLevel->monster->avatar->hide();
     foreach (Item* item, this->items) {
         item->avatar->hide();
     }
@@ -223,7 +231,7 @@ void MainWindow::show_ui_elements()
     this->westButton->show();
 
     this->hero->avatar->show();
-    this->monster->avatar->show();
+    this->currentLevel->monster->avatar->show();
     foreach (Item* item, this->items) {
         item->avatar->show();
     }
@@ -248,7 +256,7 @@ void MainWindow::hide_text_elements(){
 
 void MainWindow::resetGame(){
     this->hero->avatar->deleteLater();
-    this->monster->avatar->deleteLater();
+    this->currentLevel->monster->avatar->deleteLater();
     foreach (Item* item, this->items) {
         item->avatar->deleteLater();
     }

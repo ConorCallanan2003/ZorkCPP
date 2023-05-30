@@ -3,15 +3,17 @@
 #include <vector>
 #include <string>
 #include "item.h"
+#include "monster.h"
 
 class Level
 {
 public:
-    Level(std::string mapPath, std::string monsterPath, std::vector<Item*> items);
+    Level(std::string mapPath, Monster *monster, std::vector<Item*> items, std::string name);
 
     std::string mapPath;
-    std::string monsterPath;
+    Monster *monster;
     std::vector<Item*> items;
+    std::string name;
 
     static std::vector<Level*> levels;
     static int levelIndex;
